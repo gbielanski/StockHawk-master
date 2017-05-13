@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Timber.d("Symbol clicked: %s", symbol);
 
         Intent startChartActivity = new Intent(this, ChartActivity.class);
-        startChartActivity.putExtra("SYMBOL", symbol);
+        startChartActivity.putExtra(ChartActivity.START_SYMBOL_KEY, symbol);
         startActivity(startChartActivity);
     }
 
