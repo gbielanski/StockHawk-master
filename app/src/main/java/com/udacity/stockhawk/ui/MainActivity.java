@@ -29,6 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
+import static com.udacity.stockhawk.data.PrefUtils.checkInvalidStock;
+
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         SwipeRefreshLayout.OnRefreshListener,
         StockAdapter.StockAdapterOnClickHandler {
@@ -148,6 +150,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
         swipeRefreshLayout.setRefreshing(false);
+
+        String invalidStock = PrefUtils.checkInvalidStock(MainActivity.this);
+        if(invalidStock != null) {
+            Toast.makeText(MainActivity.this, "It was invalid stock " + invalidStock, Toast.LENGTH_LONG).show();
+            PrefUtils.removeInvalidStock(MainActivity.this, invalidStock);
+        }
 
         if (data.getCount() != 0) {
             error.setVisibility(View.GONE);

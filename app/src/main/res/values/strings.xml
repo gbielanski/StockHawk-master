@@ -4,6 +4,7 @@
     <string name="pref_stocks_initialized_key" translatable="false">initialized</string>
 
     <string name="pref_stocks_key">stocks</string>
+    <string name="pref_invalid_stocks_key">invalid_stocks</string>
 
 
     <string name="pref_display_mode_key">displayMode</string>
@@ -32,5 +33,7 @@
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
     <string name="add_new_stack_button">Add new stack button</string>
+    <string name="empty_stock_list">No Stock Information Available</string>
+    <string name="title_widget_stock">Stock</string>
 
 </resources>

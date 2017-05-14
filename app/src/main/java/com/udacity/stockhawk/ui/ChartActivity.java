@@ -24,9 +24,7 @@ import java.util.Collections;
 
 public class ChartActivity extends AppCompatActivity {
 
-    protected Typeface mTfLight;
     public static String START_SYMBOL_KEY = "SYMBOL";
-    private static final int HISTORY_STOCK_LOADER = 123;
     private LineChart mChart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +43,9 @@ public class ChartActivity extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(stackSymbolURI, projection, null, null, null);
         if (cursor != null && cursor.getCount() != 0) {
             cursor.moveToFirst();
-
             setChartData(cursor);
             refreshChartDisplay();
         }
-
     }
 
     private void refreshChartDisplay(){
