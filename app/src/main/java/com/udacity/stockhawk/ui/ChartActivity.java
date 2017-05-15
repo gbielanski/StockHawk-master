@@ -2,41 +2,72 @@ package com.udacity.stockhawk.ui;
 
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 
 public class ChartActivity extends AppCompatActivity {
-
+    TextView mSymbolTextView;
+    
     public static String START_SYMBOL_KEY = "SYMBOL";
     private LineChart mChart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
-        String symbol = getIntent().getStringExtra(START_SYMBOL_KEY);
-        Log.v(START_SYMBOL_KEY, "onCreate " + symbol);
 
+        mSymbolTextView = (TextView)findViewById(R.id.chart_symbol);
+        String symbol = getIntent().getStringExtra(START_SYMBOL_KEY);
+        mSymbolTextView.setText(symbol);
         Bundle bundle = new Bundle();
         bundle.putString(START_SYMBOL_KEY, symbol);
         mChart = (LineChart) findViewById(R.id.chart_stock);
+        mChart.getDescription().setEnabled(false);
+        mChart.setTouchEnabled(false);
         mChart.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        mChart.setDrawGridBackground(false);
+        mChart.setExtraTopOffset(24f);
+
+        XAxis x = mChart.getXAxis();
+        x.setValueFormatter(new MyCustomXAxisValueFormatter());
+        x.setLabelCount(6, false);
+        x.setTextColor(Color.WHITE);
+        x.setTextSize(18f);
+        x.setPosition(XAxis.XAxisPosition.TOP);
+        //x.setDrawGridLines(false);
+        x.setAxisLineColor(Color.WHITE);
+        YAxis y = mChart.getAxisLeft();
+        //y.setTypeface(mTfLight);
+        y.setLabelCount(6, false);
+        y.setTextColor(Color.WHITE);
+        y.setTextSize(24f);
+        y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+        //y.setDrawGridLines(false);
+        y.setAxisLineColor(Color.WHITE);
+
+        mChart.getAxisRight().setEnabled(false);
+        mChart.getLegend().setEnabled(false);
         mChart.invalidate();
         Uri stackSymbolURI = Contract.Quote.URI.buildUpon().appendPath(symbol).build();
         String [] projection = {Contract.Quote.COLUMN_HISTORY};
@@ -53,19 +84,24 @@ public class ChartActivity extends AppCompatActivity {
 
     }
 
-
+    
+    private String[] cursorToHistory(Cursor cursor){
+        String historyString = cursor.getString(0);
+        String[] historyStringArray = historyString.split("\n");
+        Collections.reverse(Arrays.asList(historyStringArray));
+        
+        return historyStringArray;
+    }
+    
     private void setChartData(Cursor cursor) {
 
         ArrayList<Entry> yVals = new ArrayList<Entry>();
 
-        String historyString = cursor.getString(0);
-        String[] historyStringArray = historyString.split("\n");
-
-        Collections.reverse(Arrays.asList(historyStringArray));
+        String[] historyStringArray = cursorToHistory(cursor);
+        
         for (int i = 0; i < historyStringArray.length; i++) {
             String [] particularStockValueAndDate = historyStringArray[i].split(",");
-            yVals.add(new Entry(i, Float.valueOf(particularStockValueAndDate[1])));
-            Log.v("Value", Float.valueOf(particularStockValueAndDate[1]).toString());
+            yVals.add(new Entry(Float.valueOf(particularStockValueAndDate[0]), Float.valueOf(particularStockValueAndDate[1])));
         }
 
         LineDataSet set1;
@@ -101,10 +137,21 @@ public class ChartActivity extends AppCompatActivity {
 
             // create a data object with the datasets
             LineData data = new LineData(set1);
-            data.setValueTextSize(9f);
-            data.setDrawValues(true);
+            data.setValueTextSize(24f);
+            data.setDrawValues(false);
             // set data
             mChart.setData(data);
+        }
+    }
+
+    private class MyCustomXAxisValueFormatter implements IAxisValueFormatter {
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/yy");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis((long) value);
+            return formatter.format(calendar.getTime());
         }
     }
 

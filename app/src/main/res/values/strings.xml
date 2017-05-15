@@ -36,4 +36,7 @@
     <string name="empty_stock_list">No Stock Information Available</string>
     <string name="title_widget_stock">Stock</string>
 
+    <string name="widget_color_change_plus">#4CAF50</string>
+    <string name="widget_color_change_minus">#FF5722</string>
+
 </resources>

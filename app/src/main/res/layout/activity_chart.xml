@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/chart_symbol"
+        style="@style/StockSymbolTextStyle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tutaj jest ściernisko ale będzie San Francisco"/>
+        android:gravity="center"
+        tools:text="GOOG" />
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart_stock"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin"/>
 </LinearLayout>

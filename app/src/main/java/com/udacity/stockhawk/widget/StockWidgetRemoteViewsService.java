@@ -1,15 +1,10 @@
 package com.udacity.stockhawk.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Binder;
-import android.os.Build;
-import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -18,11 +13,9 @@ import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 
-import java.lang.annotation.Target;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
     public class StockWidgetRemoteViewsService extends RemoteViewsService {
         public final String LOG_TAG = StockWidgetRemoteViewsService.class.getSimpleName();
@@ -110,9 +103,9 @@ import java.util.concurrent.ExecutionException;
                     float percentageChange = data.getFloat(INDEX_PERCENTAGE_CHANGE);
 
                     if (rawAbsoluteChange > 0) {
-                        views.setTextColor(R.id.widget_change, Color.parseColor("#4CAF50"));
+                        views.setTextColor(R.id.widget_change, Color.parseColor(getString(R.string.widget_color_change_plus)));
                     } else {
-                        views.setTextColor(R.id.widget_change, Color.parseColor("#FF5722"));
+                        views.setTextColor(R.id.widget_change, Color.parseColor(getString(R.string.widget_color_change_minus)));
                     }
 
                     String change = dollarFormatWithPlus.format(rawAbsoluteChange);
@@ -125,14 +118,8 @@ import java.util.concurrent.ExecutionException;
                     } else {
                         views.setTextViewText(R.id.widget_change, percentage);
                     }
-
-                    //TODO setRemoteContentDescription(views, description);
                     return views;
                 }
-//
-//                private void setRemoteContentDescription(RemoteViews views, String description) {
-//                    views.setContentDescription(R.id.widget_icon, description);
-//                }
 
                 @Override
                 public RemoteViews getLoadingView() {

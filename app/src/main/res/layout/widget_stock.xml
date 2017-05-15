@@ -8,7 +8,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
-            android:dividerHeight="0dp"
+            android:dividerHeight="@dimen/widget_stock_divider_height"
             tools:listitem="@layout/widget_stock_list_item"/>
         <TextView
             android:id="@+id/widget_empty"
