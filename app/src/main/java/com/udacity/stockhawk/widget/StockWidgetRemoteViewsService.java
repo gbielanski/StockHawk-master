@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Binder;
-import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -22,8 +20,6 @@ import java.util.Locale;
 import static com.udacity.stockhawk.ui.ChartActivity.START_SYMBOL_KEY;
 
 public class StockWidgetRemoteViewsService extends RemoteViewsService {
-        public final String LOG_TAG = StockWidgetRemoteViewsService.class.getSimpleName();
-
         private static final String[] STOCK_COLUMNS = {
                 Contract.Quote.TABLE_NAME + "." + Contract.Quote._ID,
                 Contract.Quote.COLUMN_SYMBOL,
@@ -32,10 +28,10 @@ public class StockWidgetRemoteViewsService extends RemoteViewsService {
                 Contract.Quote.COLUMN_PERCENTAGE_CHANGE
         };
         // these indices must match the projection
-        static final int INDEX_SYMBOL = 1;
-        static final int INDEX_PRICE = 2;
-        static final int INDEX_ABSOLUTE_CHANGE = 3;
-        static final int INDEX_PERCENTAGE_CHANGE = 4;
+        private static final int INDEX_SYMBOL = 1;
+        private static final int INDEX_PRICE = 2;
+        private static final int INDEX_ABSOLUTE_CHANGE = 3;
+        private static final int INDEX_PERCENTAGE_CHANGE = 4;
 
         @Override
         public RemoteViewsFactory onGetViewFactory(Intent intent) {

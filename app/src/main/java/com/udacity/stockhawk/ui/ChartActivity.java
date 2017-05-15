@@ -3,6 +3,7 @@ package com.udacity.stockhawk.ui;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -26,11 +27,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Locale;
 
 public class ChartActivity extends AppCompatActivity {
-    TextView mSymbolTextView;
+    private TextView mSymbolTextView;
     
-    public static String START_SYMBOL_KEY = "SYMBOL";
+    public static final String START_SYMBOL_KEY = "SYMBOL";
     private LineChart mChart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class ChartActivity extends AppCompatActivity {
         mChart = (LineChart) findViewById(R.id.chart_stock);
         mChart.getDescription().setEnabled(false);
         mChart.setTouchEnabled(false);
-        mChart.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        mChart.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         mChart.setDrawGridBackground(false);
         mChart.setExtraTopOffset(24f);
 
@@ -94,12 +96,12 @@ public class ChartActivity extends AppCompatActivity {
     
     private void setChartData(Cursor cursor) {
 
-        ArrayList<Entry> yVals = new ArrayList<Entry>();
+        ArrayList<Entry> yVals = new ArrayList<>();
 
         String[] historyStringArray = cursorToHistory(cursor);
-        
-        for (int i = 0; i < historyStringArray.length; i++) {
-            String [] particularStockValueAndDate = historyStringArray[i].split(",");
+
+        for (String aHistoryStringArray : historyStringArray) {
+            String[] particularStockValueAndDate = aHistoryStringArray.split(",");
             yVals.add(new Entry(Float.valueOf(particularStockValueAndDate[0]), Float.valueOf(particularStockValueAndDate[1])));
         }
 
@@ -147,7 +149,7 @@ public class ChartActivity extends AppCompatActivity {
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/yy");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/yy", Locale.getDefault());
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis((long) value);
             return formatter.format(calendar.getTime());

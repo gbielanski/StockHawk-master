@@ -1,7 +1,6 @@
 package com.udacity.stockhawk.data;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -62,11 +61,10 @@ public final class PrefUtils {
 
         if(add) {
             editor.putString(key, symbol);
-            editor.commit();
         }else{
             editor.remove(key);
-            editor.apply();
         }
+        editor.apply();
     }
 
     public static void addInvalidStock(Context context, String symbol) {
@@ -79,9 +77,8 @@ public final class PrefUtils {
 
     public static String checkInvalidStock(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String invalidStock = prefs.getString(context.getString(R.string.pref_invalid_stocks_key), null);
 
-        return invalidStock;
+        return prefs.getString(context.getString(R.string.pref_invalid_stocks_key), null);
     }
 
     public static void addStock(Context context, String symbol) {

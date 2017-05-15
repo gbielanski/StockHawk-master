@@ -7,7 +7,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +17,8 @@ import android.widget.TextView;
 
 import com.udacity.stockhawk.R;
 
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
 
 
 public class AddStockDialog extends DialogFragment {

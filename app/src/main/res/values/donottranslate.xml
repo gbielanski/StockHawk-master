@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Stock Hawk</string>
+    <string name="pref_stocks_initialized_key">initialized</string>
+    <string name="pref_stocks_key">stocks</string>
+    <string name="pref_invalid_stocks_key">invalid_stocks</string>
+    <string name="pref_display_mode_key">displayMode</string>
+    <string name="pref_display_mode_default">@string/pref_display_mode_percentage_key</string>
+    <string name="pref_display_mode_absolute_key">absolute</string>
+    <string name="pref_display_mode_percentage_key">percentage</string>
+    <string name="widget_color_change_plus">#4CAF50</string>
+    <string name="widget_color_change_minus">#FF5722</string>
+</resources>
