@@ -40,8 +40,7 @@ public class ChartActivity extends AppCompatActivity {
         mSymbolTextView = (TextView)findViewById(R.id.chart_symbol);
         String symbol = getIntent().getStringExtra(START_SYMBOL_KEY);
         mSymbolTextView.setText(symbol);
-        Bundle bundle = new Bundle();
-        bundle.putString(START_SYMBOL_KEY, symbol);
+
         mChart = (LineChart) findViewById(R.id.chart_stock);
         mChart.getDescription().setEnabled(false);
         mChart.setTouchEnabled(false);

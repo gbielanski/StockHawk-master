@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Binder;
+import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -17,7 +19,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-    public class StockWidgetRemoteViewsService extends RemoteViewsService {
+import static com.udacity.stockhawk.ui.ChartActivity.START_SYMBOL_KEY;
+
+public class StockWidgetRemoteViewsService extends RemoteViewsService {
         public final String LOG_TAG = StockWidgetRemoteViewsService.class.getSimpleName();
 
         private static final String[] STOCK_COLUMNS = {
@@ -118,6 +122,10 @@ import java.util.Locale;
                     } else {
                         views.setTextViewText(R.id.widget_change, percentage);
                     }
+
+                    final Intent fillInIntent = new Intent();
+                    fillInIntent.putExtra(START_SYMBOL_KEY, stockSymbol);
+                    views.setOnClickFillInIntent(R.id.widget_stock_list_item, fillInIntent);
                     return views;
                 }
 

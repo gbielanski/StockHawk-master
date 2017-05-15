@@ -6,8 +6,8 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingStart="4dp"
-    android:paddingEnd="4dp">
-<!-- TODO add touch selector -->
+    android:paddingEnd="4dp"
+    android:id="@+id/widget_stock_list_item">
     <TextView
         android:id="@+id/widget_symbol"
         style="@style/StockSymbolTextStyle"
